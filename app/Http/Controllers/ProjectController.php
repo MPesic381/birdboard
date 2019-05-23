@@ -51,10 +51,6 @@ class ProjectController extends Controller
             'description' => 'required',
         ]);
 
-//        $attributes['user_id'] = auth()->id();
-//
-//        Project::create($attributes);
-
         auth()->user()->projects()->create($attributes);
 
         return redirect()->route('projects.index');
