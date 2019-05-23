@@ -3,7 +3,6 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ProjectTest extends TestCase
@@ -11,7 +10,7 @@ class ProjectTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function a_project_has_a_path()
+    public function has_a_path()
     {
         $project = factory('App\Project')->create();
 
