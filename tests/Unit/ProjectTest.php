@@ -14,6 +14,14 @@ class ProjectTest extends TestCase
     {
         $project = factory('App\Project')->create();
 
-        $this->assertEquals('/project/' . $project->id, $project->path());
+        $this->assertEquals('/projects/' . $project->id, $project->path());
+    }
+
+    /** @test */
+    public function it_belongs_to_an_user()
+    {
+        $project = factory('App\Project')->create();
+
+        $this->assertInstanceOf('App\User', $project->user);
     }
 }

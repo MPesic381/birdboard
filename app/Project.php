@@ -15,9 +15,23 @@ class Project extends Model
         'title', 'description', 'user_id'
     ];
 
-
+    /**
+     * Uri path
+     *
+     * @return string
+     */
     public function path()
     {
-        return '/project/' . $this->id;
+        return '/projects/' . $this->id;
+    }
+
+    /**
+     * Relationship with User model
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
