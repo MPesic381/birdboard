@@ -12,6 +12,6 @@ class Task extends Model
      * @var array
      */
     protected $fillable = [
-        'body'
+        'body', 'completed'
     ];
 }

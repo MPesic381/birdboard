@@ -17,10 +17,20 @@
                 <div class="mb-8">
                     <h2 class="text-lg text-grey font-normal mb-3">Tasks</h2>
                     @foreach($project->tasks as $task)
-                        <div class="card mb-3">{{ $task->body }}</div>
+                        <div class="card mb-3">
+                            <form action="{{ route('project.tasks.update', [$project->id, $task->id]) }}" method="post">
+                                @method('PATCH')
+                                @csrf
+
+                                <div class="flex">
+                                    <input type="text" name="body" value="{{ $task->body }}" class="w-full">
+                                    <input type="checkbox" name="completed" onchange="this.form.submit()">
+                                </div>
+                            </form>
+                        </div>
                     @endforeach
                     <div class="card mb-3">
-                        <form action="{{ route('project.task.store', $project->id) }}" method="post">
+                        <form action="{{ route('project.tasks.store', $project->id) }}" method="post">
                             @csrf
                             <input class="w-full" type="text" name="body" placeholder="Add new task...">
                         </form>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Project;
+use App\Task;
 use Illuminate\Http\Request;
 
 class ProjectTasksController extends Controller
@@ -75,13 +76,20 @@ class ProjectTasksController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Project                  $project
+     * @param Task                     $task
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return void
      */
-    public function update(Request $request, $id)
+    public function update(Project $project, Task $task, Request $request)
     {
-        //
+        $task->update([
+            'body' => $request->body,
+            'completed' => $request->has('completed')
+        ]);
+
+        return redirect()->route('projects.show', $project->id);
     }
 
     /**
