@@ -41,7 +41,13 @@ class ProjectTasksController extends Controller
             'body' => 'required'
         ]);
 
+        if (auth()->user()->isNot($project->user)) {
+            abort(403);
+        }
+
         $project->tasks()->create($request->all());
+
+        return redirect()->route('projects.show', $project->id);
     }
 
     /**
