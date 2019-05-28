@@ -16,13 +16,22 @@ class Task extends Model
     ];
 
     /**
+     * The relationships that should be touched on save.
+     *
+     * @var array
+     */
+    protected $touches = [
+        'project'
+    ];
+
+    /**
      * Relationship with Project model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function project()
     {
-        return $this->belongsTo(Project::class);
+        return $this->belongsTo(Project::class)->latest('updated_at');
     }
 
     public function path()
