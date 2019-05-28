@@ -41,6 +41,7 @@ class ProjectController extends Controller
         $attributes = $request->validate([
             'title' => 'required',
             'description' => 'required',
+            'notes' => 'min:3',
         ]);
 
         $project = auth()->user()->projects()->create($attributes);
@@ -51,16 +52,16 @@ class ProjectController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     *
+     * @return void
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function show($id)
     {
         $project = Project::find($id);
 
-        if (auth()->user()->isNot($project->user)) {
-            abort(403);
-        }
+        $this->authorize('update', $project);
 
         return view('projects.show')
             ->withProject($project);
@@ -80,13 +81,21 @@ class ProjectController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int                      $id
+     *
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(Request $request, $id)
     {
-        //
+        $project = Project::find($id);
+
+        $this->authorize('update', $project);
+
+        $project->update($request->all());
+
+        return redirect()->route('projects.show', $project->id);
     }
 
     /**

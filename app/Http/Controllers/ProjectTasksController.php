@@ -35,6 +35,7 @@ class ProjectTasksController extends Controller
      * @param \Illuminate\Http\Request $request
      *
      * @return void
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(Project $project, Request $request)
     {
@@ -42,9 +43,7 @@ class ProjectTasksController extends Controller
             'body' => 'required'
         ]);
 
-        if (auth()->user()->isNot($project->user)) {
-            abort(403);
-        }
+        $this->authorize('update', $project);
 
         $project->tasks()->create($request->all());
 
@@ -81,12 +80,11 @@ class ProjectTasksController extends Controller
      * @param \Illuminate\Http\Request $request
      *
      * @return void
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(Project $project, Task $task, Request $request)
     {
-        if (auth()->user()->isNot($project->user)) {
-            abort(403);
-        }
+        $this->authorize('update', $project);
 
         $task->update([
             'body' => $request->body,
