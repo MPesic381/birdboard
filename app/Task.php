@@ -14,4 +14,19 @@ class Task extends Model
     protected $fillable = [
         'body', 'completed'
     ];
+
+    /**
+     * Relationship with Project model
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function project()
+    {
+        return $this->belongsTo(Project::class);
+    }
+
+    public function path()
+    {
+        return "/projects/{$this->project->id}/tasks/{$this->id}";
+    }
 }

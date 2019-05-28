@@ -84,6 +84,10 @@ class ProjectTasksController extends Controller
      */
     public function update(Project $project, Task $task, Request $request)
     {
+        if (auth()->user()->isNot($project->user)) {
+            abort(403);
+        }
+
         $task->update([
             'body' => $request->body,
             'completed' => $request->has('completed')

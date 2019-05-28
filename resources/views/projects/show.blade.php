@@ -23,8 +23,8 @@
                                 @csrf
 
                                 <div class="flex">
-                                    <input type="text" name="body" value="{{ $task->body }}" class="w-full">
-                                    <input type="checkbox" name="completed" onchange="this.form.submit()">
+                                    <input type="text" name="body" value="{{ $task->body }}" class="w-full {{ $task->completed ? 'text-grey' : '' }}">
+                                    <input type="checkbox" name="completed" onchange="this.form.submit()" {{ $task->completed ? 'checked ' : '' }}>
                                 </div>
                             </form>
                         </div>
